@@ -16,7 +16,8 @@ public:
         {
             workers.emplace_back([this]
             {
-                while (true) {
+                while (true)
+                {
                     std::function<void()> task;
                     {
                         unique_lock<mutex> lock(queueMutex);
@@ -99,21 +100,23 @@ bool recurs(ThreadsP& pool, string filePath, string fileName)
 }
 
 int main() {
+
     string fileName;
     cout << "Enter a Filename: ";
     cin >> fileName;
 
     cout << "Searching file with name: " << fileName << endl;
 
+    constexpr int MAX_THREADS = 8;
     int numThreads = thread::hardware_concurrency();
-    ThreadsP pool(numThreads > 8 ? 8 : numThreads);
+    ThreadsP pool(numThreads > MAX_THREADS ? MAX_THREADS : numThreads);
 
     if(!recurs(pool, "C:\\", fileName))
     {
         cout << "File not found" << endl;
     }
 
-    system("pause");
+    cin.ignore();
 
     return 0;
 }
