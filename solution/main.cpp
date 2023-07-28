@@ -5,7 +5,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <functional>
-#include <tuple>
+
 
 class ThreadsP
 {
@@ -99,18 +99,18 @@ bool recurs(ThreadsP& pool, string filePath, string fileName)
 }
 
 int main() {
-    string fileName = "";
-    cout << "Enter Filename: ";
+    string fileName;
+    cout << "Enter a Filename: ";
     cin >> fileName;
 
-    cout << "Looking for file with name: " << fileName << endl;
+    cout << "Searching file with name: " << fileName << endl;
 
     int numThreads = thread::hardware_concurrency();
     ThreadsP pool(numThreads > 8 ? 8 : numThreads);
 
     if(!recurs(pool, "C:\\", fileName))
     {
-        cout << "Nothing found" << endl;
+        cout << "File not found" << endl;
     }
 
     system("pause");
